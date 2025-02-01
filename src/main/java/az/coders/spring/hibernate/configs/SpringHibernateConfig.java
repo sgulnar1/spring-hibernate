@@ -1,11 +1,13 @@
 package az.coders.spring.hibernate.configs;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -20,16 +22,21 @@ import java.util.Properties;
 @PropertySource("database.properties")
 @EnableTransactionManagement
 public class SpringHibernateConfig {
-
-    @Value("${datasource.url}")
-    private String url;
-    @Value("${datasource.username}")
-    private String username;
-    @Value("${datasource.password}")
-    private String password;
+    @Autowired
+    Environment environment;
+//
+//    @Value("${datasource.url}")
+//    private String url;
+//    @Value("${datasource.username}")
+//    private String username;
+//    @Value("${datasource.password}")
+//    private String password;
 
     @Bean
     public DataSource dataSource() {
+        String url = environment.getProperty("datasource.url");
+        String username = environment.getProperty("datasource.username");
+        String password = environment.getProperty("datasource.password");
         System.out.println("url: " + url);
         System.out.println("username: " + username);
         System.out.println("password: " + password);

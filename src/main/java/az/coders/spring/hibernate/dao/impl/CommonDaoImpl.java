@@ -26,17 +26,18 @@ public class CommonDaoImpl<E, T> implements CommonDao<E, T> {
     }
 
     @Override
-    public void delete(T id) {
-        sessionFactory.getCurrentSession().remove(findById(id));
+    public void delete(Class<E> entityClass, T id) {
+        sessionFactory.getCurrentSession().remove(findById(entityClass, id));
     }
 
     @Override
-    public E findById(T id) {
-        return null;
+    public E findById(Class<E> entityClass, T id) {
+        return sessionFactory.getCurrentSession().get(entityClass, id);
     }
 
     @Override
-    public List<E> findAll() {
-        return List.of();
+    public List<E> findAll(Class<E> entityClass) {
+        return sessionFactory.getCurrentSession().createQuery("from "+entityClass.getName()).list();
+
     }
 }

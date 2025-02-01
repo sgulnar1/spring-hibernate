@@ -16,8 +16,9 @@ import javax.sql.DataSource;
 public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringHibernateConfig.class);
-        CategoryDaoImpl categoryDaoImpl = context.getBean("categoryDaoImpl", CategoryDaoImpl.class);
-
-        categoryDaoImpl.delete(36);
+//        ProductDao categoryDao = context.getBean("productDaoImpl", ProductDao.class);
+//        categoryDao.findAll(Product.class).forEach(System.out::println);
+        CategoryDao categoryDao = (CategoryDao) context.getBean("categoryDaoImpl");
+        categoryDao.save(new Category("new name", "new description"));
     }
 }
